@@ -1,0 +1,5 @@
+journeys-covers....: 1200x630px  // sem bordas
+collectibles-covers: 1200x630px  // sem bordas
+
+conteúdo do qr-code: artifact:nome do modelo
+exemplo: artifact:placa-mae-AMD.glb

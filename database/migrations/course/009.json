@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Tecnologia em Sistemas para Internet",
+        	"Modality": "Presencial",
+        	"internal": "YES",
+        	"shift": "tarde|noite",
+        	"typer": "tecnólogo",
+          	"level": "graduação"
+      }
+}

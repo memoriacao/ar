@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Edificações",
+        	"Modality": "Presencial",
+        	"internal": "YES",
+        	"shift": "Noite",
+        	"typer": "subsequente",
+          	"level": "Técnico"
+      }
+}

@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Tecnologia em Alimentos",
+        	"Modality": "Presencial",
+        	"internal": "YES",
+        	"shift": "manhã|tarde",
+        	"typer": "tecnólogo",
+          	"level": "graduação"
+      }
+}

@@ -1,0 +1,43 @@
+
+{
+	"table": "collectible",
+    "content": {
+        "name":"Placa mãe AMD",
+        "description":"Placa mãe AMD AM4 Socket",
+        "image":"/images/collectibles/placa-mae-AMD.jpeg",
+
+        "props": {
+			"model": "/models/collectibles/placa-mae-AMD.glb",
+			"AR": {
+				"scale":"0.05 0.05 0.05",
+				"position":"0 0 0",
+				"rotation":"0 0 0",
+				"zoom":"0.1"
+			},
+			"3D": {
+				"scale":"0.05 0.05 0.05",
+				"position":"0 0 0",
+				"rotation":"0 0 0",
+				"zoom":"0.1"
+			}
+		},
+
+        "riddle":"charada para teste",
+        "gpsLocation":"-8.508947, -39.308214",
+        "link":"link para o manual do artefato ou documento",
+        "credits":"link para auto do modelo 3d, caso exista",
+        "points":"10",
+      	"journey":"Fundamentos de Redes",
+
+		"question": {
+			"question":"Qual tipo de Socket essa placa Utiliza?",
+			"option_a":"LGA 1155",
+			"option_b":"LGA 2012",
+			"option_c":"AM4",
+			"option_d":"Socket M2",
+			"correct_option":"AM4",
+			"fonte_link": "",
+			"collectible":"Placa mãe AMD"
+    	}
+      }
+}

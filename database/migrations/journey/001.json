@@ -1,0 +1,12 @@
+{
+	"table": "journey",
+	"content": {
+        "name": "Fundamentos de Redes",
+        "category": "Tecnologia da Informação",
+        "course": "Tecnologia em Sistemas para Internet",
+        "description": "Explore a infraestrutura do laboratório de redes...",
+        "image": ""
+    },
+
+    "depends": []
+}

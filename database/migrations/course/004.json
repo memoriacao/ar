@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Agropecuária",
+        	"Modality": "Presencial",
+        	"internal": "YES",
+        	"shift": "manhã|tarde",
+        	"typer": "subsequente",
+          	"level": "Técnico"
+      }
+}

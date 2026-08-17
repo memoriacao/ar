@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Engenharia Civil",
+        	"Modality": "Presencial",
+        	"internal": "YES",
+        	"shift": "manhã|tarde",
+        	"typer": "bacharelado",
+          	"level": "graduação"
+      }
+}

@@ -1,0 +1,11 @@
+{
+	"table": "course",
+    	"content": {
+        	"label": "Metodologias do Ensino de Línguas",
+        	"Modality": "A distância",
+        	"internal": "YES",
+        	"shift": "",
+        	"typer": "especialização",
+          	"level": "pos-graduação"
+      }
+}
