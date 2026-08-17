@@ -147,7 +147,7 @@
 		    if (!modelName || !category) {
 		        alert("Modelo (m) ou Categoria (c) não informados na URL.");
 		    } else {
-		        const modelUrl = `models/${encodeURIComponent(category)}/${encodeURIComponent(modelName)}`;
+		        const modelUrl = encodeURIComponent(modelName);
 		        const finalScale = scale * zoom;
 		        
 		        const model = document.createElement('a-gltf-model');
