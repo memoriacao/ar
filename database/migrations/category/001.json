@@ -1,1 +1,4 @@
- { "table": "category", "content": {  "label": "Tecnologia da Informação" }}
+ [
+    { "table": "category", "content": {  "label": "Tecnologia da Informação" }},
+    { "table": "category", "content": {  "label": "Fundamentos da física" }}
+]

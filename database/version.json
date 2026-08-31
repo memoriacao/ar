@@ -1,29 +1,13 @@
 {
 	"migrations": {
 		"version_01" : [
-			{ "file": "migrations/category/001.json","logs": "Adicionando categoria Tecnologia da Informação"},
-			{ "file": "migrations/category/002.json","logs": "Adicionando categoria Fundamentos da física"},	
-			{ "file": "migrations/course/001.json", "logs": "Adicionando Curso: Agropecuária [Ensino Médio]"},
-			{ "file": "migrations/course/002.json", "logs": "Adicionando Curso: Edificações [Ensino Médio]"},
-			{ "file": "migrations/course/003.json", "logs": "Adicionando Curso: Informática [Ensino Médio]"},
-			{ "file": "migrations/course/004.json", "logs": "Adicionando Curso: Informática [subsequente]"},
-			{ "file": "migrations/course/005.json", "logs": "Adicionando Curso: Edificações [subsequente]"},
-			{ "file": "migrations/course/006.json", "logs": "Adicionando Curso: Engenharia Civil [graduação]"},
-			{ "file": "migrations/course/007.json", "logs": "Adicionando Curso: Física [graduação]"},
-			{ "file": "migrations/course/008.json", "logs": "Adicionando Curso: Tecnologia em Alimentos [graduação]"},
-			{ "file": "migrations/course/009.json", "logs": "Adicionando Curso: Tecnologia em Sistemas para Internet [graduação]"},
-			{ "file": "migrations/course/010.json", "logs": "Adicionando Curso: Educação Profissional e Tecnológica (ProfePT) [Mestrado profissional]"},
-			{ "file": "migrations/course/011.json", "logs": "Adicionando Curso: Metodologias do Ensino de Línguas [especialização]"},
-			{ "file": "migrations/course/012.json", "logs": "Adicionando Curso: Recursos Hídricos para o Semiárido [especialização]"}
+			{ "file": "migrations/category/001.json","logs": "Adicionando novas categorias"},
+			{ "file": "migrations/course/001.json",  "logs": "Adicionando novos cursos internos"}
 		],
 
 		"version_03" : [
-			{ "file": "migrations/journey/001.json", "logs": "Adicionando Jornada: Redes 1"},
-			{ "file": "migrations/journey/002.json", "logs": "Adicionando Jornada: Redes 2"}
-		],
-
-		"version_04" : [
-			{ "file": "migrations/collectible/001.json", "logs": "Adicionando objeto coletável: Placa mãe AMD"}
+			{ "file": "migrations/journey/001.json", "logs": "Adicionando Jornada: Montando um PC"},
+			{ "file": "migrations/collectible/001.json", "logs": "adicionado coletáveis para a jornada: Montando um PC"}
 		]
 	}
 }
