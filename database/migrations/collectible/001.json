@@ -82,7 +82,7 @@
 		"content": {
 			"name": "Memória RAM",
 			"description": "A memória RAM armazena temporariamente os dados e instruções usados pelos programas em execução. Sua capacidade é medida em gigabytes (GB) e existem diferentes gerações, como DDR4 e DDR5. A memória deve ser compatível com a placa-mãe, tanto em relação à geração quanto ao tipo suportado.",
-			"image": "images/collectibles/ram_memory.png",
+			"image": "images/collectibles/ram_me-_s23er.png",
 			"props": {
 				"model": "models/collectibles/ram_memory.glb",
 				"3D": {
@@ -113,6 +113,84 @@
 				"correct_option": "A geração da memória",
 				"fonte_link": "https://pt.wikipedia.org/wiki/Mem%C3%B3ria_de_acesso_aleat%C3%B3rio",
 				"collectible": "Memória RAM"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "SSD",
+			"description": "O SSD é um dispositivo usado para armazenar o sistema, programas e arquivos de forma permanente. Existem diferentes tipos, como SSD SATA e NVMe, que utilizam conexões distintas e oferecem velocidades diferentes. Modelos M.2 podem usar SATA ou NVMe, sendo importante verificar a compatibilidade com a placa-mãe.",
+			"image": "images/collectibles/ssd_nvme-a23a.png",
+			"props": {
+				"model": "models/collectibles/ssd_noname_m2.glb",
+				"AR": {
+					"scale": "0.23 0.23 0.23",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.23 0.23 0.23",
+					"position": "0 0 0",
+					"rotation": "50.86668395996094 83,3999938964844 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Guardo seus arquivos mesmo sem energia. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "https://en.wikipedia.org/wiki/Solid-state_drive",
+			"credits": "https://skfb.ly/6X6BS",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é uma vantagem comum dos SSDs em relação aos HDDs?",
+				"option_a": "Maior velocidade de acesso aos dados",
+				"option_b": "Possuem discos magnéticos maiores",
+				"option_c": "Precisam de mais energia para funcionar",
+				"option_d": "Só funcionam em computadores antigos",
+				"correct_option": "Maior velocidade de acesso aos dados",
+				"fonte_link": "https://en.wikipedia.org/wiki/Solid-state_drive",
+				"collectible": "SSD"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Fonte de alimentação",
+			"description": "A fonte de alimentação fornece energia elétrica para os componentes do computador, convertendo a energia da tomada para tensões adequadas ao sistema. Sua potência é medida em watts (W), e existem diferentes padrões e níveis de eficiência. A fonte deve ter potência suficiente e conectores compatíveis com os componentes instalados.",
+			"image": "images/collectibles/font-alimentacao.png",
+			"props": {
+				"model": "models/collectibles/m10__inspiredbycor.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Recebo energia e alimento o computador. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "https://pt.wikipedia.org/wiki/Unidade_de_fonte_de_alimenta%C3%A7%C3%A3o_(computador)",
+			"credits": "https://skfb.ly/pqx8z",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual unidade é utilizada para indicar a potência de uma fonte de alimentação?",
+				"option_a": "Watts (W)",
+				"option_b": "Gigabytes (GB)",
+				"option_c": "Hertz (Hz)",
+				"option_d": "Volts (V)",
+				"correct_option": "Watts (W)",
+				"fonte_link": "https://pt.wikipedia.org/wiki/Unidade_de_fonte_de_alimenta%C3%A7%C3%A3o_(computador)",
+				"collectible": "Fonte de alimentação"
 			}
 		}
 	}
