@@ -8,15 +8,15 @@
 			"props": {
 				"model": "models/collectibles/placa-mae.glb",
 				"AR": {
-					"scale": "1 1 1",
-					"position": "-0.124  0.048 0",
-					"rotation": "29.8 2674.11 0",
+					"scale": "0.07 0.07 0.07",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
 					"zoom": "0.5"
 				},
 				"3D": {
-					"scale": "1 1 1",
-					"position": "-0.124  0.048 0",
-					"rotation": "29.8 2674.11 0",
+					"scale": "0.07 0.07 0.07",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
 					"zoom": "0.5"
 				}
 			},
@@ -47,16 +47,16 @@
 			"props": {
 				"model": "models/collectibles/am4_cpu__free.glb",
 				"AR": {
-					"scale": "1 1 1",
+					"scale": " 4.661 4.661 4.661",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
-					"zoom": "0.1"
+					"zoom": "0.4"
 				},
 				"3D": {
-					"scale": "1 1 1",
+					"scale": "4.661 4.661 4.661",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
-					"zoom": "0.1"
+					"zoom": "0.4"
 				}
 			},
 			"riddle": "Sou o cérebro do computador. Quem sou eu?",
