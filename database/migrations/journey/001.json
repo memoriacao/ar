@@ -5,7 +5,7 @@
 		"category": "Tecnologia da Informação",
 		"course": "Tecnologia em Sistemas para Internet",
 		"description": "Aprenda, de forma prática, a identificar os principais componentes de um computador, compreender suas funções e entender como eles se relacionam durante a montagem de um PC.",
-		"image": "montando-um-pc.jpg",
+		"image": "images/journeys/montando-um-pc.jpg",
 		"depends": []
 	}
 }]

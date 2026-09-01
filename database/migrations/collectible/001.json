@@ -3,8 +3,8 @@
 		"table": "collectible",
 		"content": {
 			"name": "Placa-mãe",
-			"description": "A placa-mãe é a principal placa de um computador, responsável por conectar e permitir a comunicação entre componentes como processador, memória RAM, armazenamento e placa de vídeo. Existem diferentes modelos e fabricantes, e sua compatibilidade depende de características como o socket do processador e o tipo de memória suportado. Processadores Intel e AMD utilizam plataformas e sockets diferentes, e cada fabricante também possui diversas gerações de processadores. Por isso, escolher uma placa-mãe exige verificar se ela é compatível com os demais componentes do computador.",
-			"image": "placa-mae-_01aNc.jpeg",
+			"description": "A placa-mãe é responsável por conectar e permitir a comunicação entre os principais componentes do computador. Existem diferentes modelos e fabricantes, com suporte a diferentes processadores, gerações e tipos de memória. Intel e AMD utilizam sockets diferentes, por isso a placa-mãe deve ser compatível com o processador escolhido.",
+			"image": "images/collectibles/placa-mae-_01aNc.png",
 			"props": {
 				"model": "placa-mae.glb",
 				"AR": {
@@ -43,7 +43,7 @@
 		"content": {
 			"name": "Processador",
 			"description": "O processador, ou CPU, é responsável por executar instruções e realizar os cálculos que fazem o computador funcionar. Os principais fabricantes são Intel e AMD, que possuem diferentes famílias e gerações de processadores. Cada geração pode trazer mudanças em desempenho, consumo e tecnologias suportadas. Além disso, o processador deve ser compatível com o socket da placa-mãe.",
-			"image": "cpu-amd-_01aNc.jpeg",
+			"image": "images/collectibles/cpu-amd-_01aNc.png",
 			"props": {
 				"model": "am4_cpu__free.glb",
 				"AR": {
