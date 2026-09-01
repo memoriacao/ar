@@ -76,5 +76,44 @@
 				"collectible": "Processador"
 			}
 		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Memória RAM",
+			"description": "A memória RAM armazena temporariamente os dados e instruções usados pelos programas em execução. Sua capacidade é medida em gigabytes (GB) e existem diferentes gerações, como DDR4 e DDR5. A memória deve ser compatível com a placa-mãe, tanto em relação à geração quanto ao tipo suportado.",
+			"image": "images/collectibles/ram_memory.png",
+			"props": {
+				"model": "models/collectibles/ram_memory.glb",
+				"3D": {
+					"scale": "0.23 0.23 0.23",
+					"position": "0 0 0",
+					"rotation": "42,6666717529297 47,1333312988281 0",
+					"zoom": "0.1"
+				},
+				"AR": {
+					"scale": "1.7 1.7 1.7",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "1"
+				}
+			},
+			"riddle": "Guardo dados enquanto o computador trabalha. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "https://pt.wikipedia.org/wiki/Mem%C3%B3ria_de_acesso_aleat%C3%B3rio",
+			"credits": "https://skfb.ly/oLVsR",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é uma característica que deve ser compatível entre a memória RAM e a placa-mãe?",
+				"option_a": "A geração da memória",
+				"option_b": "A marca do gabinete",
+				"option_c": "O tamanho do monitor",
+				"option_d": "A potência da fonte",
+				"correct_option": "A geração da memória",
+				"fonte_link": "https://pt.wikipedia.org/wiki/Mem%C3%B3ria_de_acesso_aleat%C3%B3rio",
+				"collectible": "Memória RAM"
+			}
+		}
 	}
 ]
