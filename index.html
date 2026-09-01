@@ -1,13 +1,1842 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-	<meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CampusQuest · 3D & AR Model Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
 	<meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet">
 	<meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet">
 	<title>MemoriAção AR</title>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  <style>
+    :root {
+      --bg: #070A13;
+      --surface: #0F172A;
+      --surface-sec: #141B2D;
+      --border: #23303F;
+      --border-focus: #EAB308;
+      --accent: #EAB308;
+      --accent-subtle: rgba(234, 179, 8, 0.15);
+      --accent-glow: rgba(234, 179, 8, 0.35);
+      --green: #56FFB0;
+      --danger: #FF4D4D;
+      --text: #F8FAFC;
+      --text-sec: #94A3B8;
+      --text-muted: #64748B;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+    }
+
+    body[data-theme="light"] {
+      --bg: #F8FAFC;
+      --surface: #FFFFFF;
+      --surface-sec: #F1F5F9;
+      --border: #E2E8F0;
+      --border-focus: #CA8A04;
+      --accent: #CA8A04;
+      --accent-subtle: rgba(202, 138, 4, 0.15);
+      --accent-glow: rgba(202, 138, 4, 0.25);
+      --green: #16A34A;
+      --danger: #DC2626;
+      --text: #0F172A;
+      --text-sec: #475569;
+      --text-muted: #94A3B8;
+    }
+
+    body[data-theme="hacker"] {
+      --bg: #010A04;
+      --surface: #03140A;
+      --surface-sec: #052010;
+      --border: #00FF66;
+      --border-focus: #00FF66;
+      --accent: #00FF66;
+      --accent-subtle: rgba(0, 255, 102, 0.18);
+      --accent-glow: rgba(0, 255, 102, 0.4);
+      --green: #00FF66;
+      --danger: #FF3333;
+      --text: #00FF66;
+      --text-sec: #56FFB0;
+      --text-muted: #1E6B3B;
+      font-family: 'JetBrains Mono', monospace !important;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), #F59E0B);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #070A13;
+      font-weight: 900;
+      font-size: 18px;
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .brand-subtitle {
+      font-size: 11px;
+      color: var(--text-sec);
+      font-weight: 500;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      text-decoration: none;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #070A13;
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px var(--accent-glow);
+    }
+
+    .btn-secondary {
+      background: var(--surface-sec);
+      border-color: var(--border);
+      color: var(--text);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+
+    .btn-icon {
+      padding: 8px;
+      border-radius: var(--radius-md);
+    }
+
+    .theme-select {
+      background: var(--surface-sec);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 6px 12px;
+      border-radius: var(--radius-md);
+      font-size: 12px;
+      font-weight: 600;
+      outline: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    .main-container {
+      display: grid;
+      grid-template-columns: 460px 1fr;
+      flex: 1;
+      height: calc(100vh - 61px);
+      overflow: hidden;
+    }
+
+    @media (max-width: 1100px) {
+      .main-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow: visible;
+      }
+    }
+
+    /* CONTROLS COLUMN */
+    .controls-panel {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .panel-card {
+      background: var(--surface-sec);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-sec);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .form-input, .form-select {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+      width: 100%;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--border-focus);
+    }
+
+    .vector-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+
+    .vector-input-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 6px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vector-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .vector-number {
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+      width: 100%;
+    }
+
+    .range-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border);
+      outline: none;
+      margin-top: 4px;
+      cursor: pointer;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 0 6px var(--accent-glow);
+    }
+
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+
+    .toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 20px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider-toggle {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--border);
+      transition: .2s;
+      border-radius: 20px;
+    }
+
+    .slider-toggle:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: var(--text);
+      transition: .2s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider-toggle {
+      background-color: var(--accent);
+    }
+
+    input:checked + .slider-toggle:before {
+      transform: translateX(18px);
+      background-color: #070A13;
+    }
+
+    /* JSON OUTPUT */
+    .json-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--green);
+      overflow-x: auto;
+      max-height: 240px;
+      white-space: pre;
+    }
+
+    /* VIEWPORT SIMULATOR COLUMN */
+    .viewports-area {
+      background: var(--bg);
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .viewports-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .viewports-title {
+      font-size: 16px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .viewport-tabs {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 3px;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      background: transparent;
+      border: none;
+      color: var(--text-sec);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+    }
+
+    .tab-btn.active {
+      background: var(--accent);
+      color: #070A13;
+    }
+
+    .viewports-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .viewports-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* PHONE FRAME MOCKUPS */
+    .mockup-container {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .mockup-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mockup-tag {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border-radius: var(--radius-sm);
+    }
+
+    .mockup-dimension {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* 3D VIEWER CONTAINER - SAME AS BACKPACK CARD */
+    .app-card-preview {
+      background: var(--surface-sec);
+      border: 1px solid var(--accent);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .app-3d-viewport {
+      width: 100%;
+      height: 220px; /* EXACT APP DIMENSION */
+      background: var(--surface-sec);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .app-3d-fullscreen-viewport {
+      width: 100%;
+      height: 480px;
+      background: var(--surface-sec);
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .app-card-mock-info {
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .mock-badge {
+      align-self: flex-start;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      background: var(--accent-subtle);
+      color: var(--accent);
+      border-radius: 6px;
+    }
+
+    .mock-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .mock-desc {
+      font-size: 12px;
+      color: var(--text-sec);
+      line-height: 1.4;
+    }
+
+    /* AR VIEWER CONTAINER */
+    .ar-screen-frame {
+      width: 100%;
+      height: 480px;
+      background: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ar-camera-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0.6;
+      z-index: 1;
+    }
+
+    .ar-canvas-layer {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%; height: 100%;
+      z-index: 2;
+    }
+
+    .ar-hud-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 3;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+    }
+
+    .ar-crosshair {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px; height: 40px;
+      border: 1px dashed rgba(234, 179, 8, 0.6);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .ar-crosshair:before, .ar-crosshair:after {
+      content: '';
+      position: absolute;
+      background: var(--accent);
+    }
+    .ar-crosshair:before {
+      top: 50%; left: -6px; right: -6px; height: 1px;
+    }
+    .ar-crosshair:after {
+      left: 50%; top: -6px; bottom: -6px; width: 1px;
+    }
+
+    .hud-chip {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(8px);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .drop-zone-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(234, 179, 8, 0.9);
+      color: #070A13;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 16px;
+      z-index: 999;
+      pointer-events: none;
+      border: 3px dashed #070A13;
+      border-radius: inherit;
+    }
+
+    .drop-zone-overlay.active {
+      display: flex;
+    }
+
+    /* MODAL */
+    .modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 520px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--accent);
+      color: #070A13;
+      padding: 10px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: 0 10px 25px var(--accent-glow);
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  </style>
 </head>
-<body>
+<body data-theme="dark">
+
+  <!-- HEADER -->
+  <header>
+    <div class="brand">
+      <div class="brand-logo">CQ</div>
+      <div>
+        <h1 class="brand-title">CampusQuest · 3D & AR Model Studio</h1>
+        <p class="brand-subtitle">Calibrador visual e gerador de coordenadas 3D / AR</p>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <select id="themeSelector" class="theme-select">
+        <option value="dark">Tema Escuro</option>
+        <option value="light">Tema Claro</option>
+        <option value="hacker">Modo Hacker</option>
+      </select>
+
+      <button class="btn btn-secondary" id="btnImportModal">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Importar JSON
+      </button>
+
+      <button class="btn btn-primary" id="btnCopyJson">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+        Copiar JSON
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN APP CONTAINER -->
+  <div class="main-container">
+
+    <!-- CONTROLS COLUMN (LEFT) -->
+    <div class="controls-panel">
+
+      <!-- CARD 1: MODEL SOURCE -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            1. Origem do Modelo (.glb / .gltf)
+          </span>
+          <span id="modelStatus" class="mock-badge" style="background: rgba(22, 163, 74, 0.15); color: #16A34A;">Pronto</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Base URL dos Modelos</label>
+          <input type="text" id="inputBaseUrl" class="form-input" value="https://memoriacao.github.io/ar" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Nome / Caminho do Modelo</label>
+          <div style="display: flex; gap: 6px;">
+            <input type="text" id="inputModelPath" class="form-input" placeholder="ex: models/collectibles/ti/placa-mae.glb" value="models/collectibles/placa-mae-AMD.glb" />
+            <button class="btn btn-secondary" id="btnLoadRemote" title="Carregar do Servidor">Carregar</button>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+          <input type="file" id="filePicker" accept=".glb,.gltf" style="display: none;" />
+          <button class="btn btn-secondary" style="width: 100%;" id="btnPickLocalFile">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242"/><path d="M12 12v9"/><path d="m16 16-4-4-4 4"/></svg>
+            Carregar Arquivo Local do PC (.glb)
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 2: 3D VIEWER (IN-APP) TRANSFORMS -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            2. Visualizador 3D (App)
+          </span>
+          <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 11px;" id="btnReset3D">Reset 3D</button>
+        </div>
+
+        <!-- SCALE 3D -->
+        <div class="form-group">
+          <div class="form-label">
+            <span>Escala (Scale)</span>
+            <label style="font-size: 10px; display: flex; align-items: center; gap: 4px; cursor: pointer; text-transform: none;">
+              <input type="checkbox" id="checkUniformScale" checked /> Proporcional
+            </label>
+          </div>
+          <div class="vector-grid">
+            <div class="vector-input-box">
+              <span class="vector-label">X</span>
+              <input type="number" step="0.01" id="v3d_scale_x" class="vector-number" value="0.1" />
+              <input type="range" min="0.001" max="2" step="0.005" id="slider_scale_x" class="range-slider" value="0.1" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Y</span>
+              <input type="number" step="0.01" id="v3d_scale_y" class="vector-number" value="0.1" />
+              <input type="range" min="0.001" max="2" step="0.005" id="slider_scale_y" class="range-slider" value="0.1" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Z</span>
+              <input type="number" step="0.01" id="v3d_scale_z" class="vector-number" value="0.1" />
+              <input type="range" min="0.001" max="2" step="0.005" id="slider_scale_z" class="range-slider" value="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <!-- ROTATION 3D -->
+        <div class="form-group">
+          <label class="form-label">Rotação Inicial (Graus °)</label>
+          <div class="vector-grid">
+            <div class="vector-input-box">
+              <span class="vector-label">X</span>
+              <input type="number" step="1" id="v3d_rot_x" class="vector-number" value="0" />
+              <input type="range" min="-180" max="180" step="1" id="slider_rot_x" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Y</span>
+              <input type="number" step="1" id="v3d_rot_y" class="vector-number" value="45" />
+              <input type="range" min="-180" max="180" step="1" id="slider_rot_y" class="range-slider" value="45" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Z</span>
+              <input type="number" step="1" id="v3d_rot_z" class="vector-number" value="0" />
+              <input type="range" min="-180" max="180" step="1" id="slider_rot_z" class="range-slider" value="0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- POSITION 3D -->
+        <div class="form-group">
+          <label class="form-label">Posição Centro (Position)</label>
+          <div class="vector-grid">
+            <div class="vector-input-box">
+              <span class="vector-label">X</span>
+              <input type="number" step="0.05" id="v3d_pos_x" class="vector-number" value="0" />
+              <input type="range" min="-3" max="3" step="0.02" id="slider_pos_x" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Y</span>
+              <input type="number" step="0.05" id="v3d_pos_y" class="vector-number" value="0" />
+              <input type="range" min="-3" max="3" step="0.02" id="slider_pos_y" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Z</span>
+              <input type="number" step="0.05" id="v3d_pos_z" class="vector-number" value="0" />
+              <input type="range" min="-3" max="3" step="0.02" id="slider_pos_z" class="range-slider" value="0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEWER OPTIONS -->
+        <div class="toggle-row">
+          <span class="toggle-label">Giro Automático (autoRotate)</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="checkAutoRotate" checked />
+            <span class="slider-toggle"></span>
+          </label>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label class="form-label">Zoom Mínimo</label>
+            <input type="number" step="0.1" id="v3d_zoom_min" class="form-input" value="0.5" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Zoom Máximo</label>
+            <input type="number" step="0.1" id="v3d_zoom_max" class="form-input" value="5.0" />
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 3: AR (REALIDADE AUMENTADA) TRANSFORMS -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            3. Realidade Aumentada (AR)
+          </span>
+          <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 11px;" id="btnResetAR">Reset AR</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+          <div class="form-group">
+            <label class="form-label">AR Scale</label>
+            <input type="number" step="0.1" id="ar_scale" class="form-input" value="1" />
+            <input type="range" min="0.1" max="10" step="0.1" id="slider_ar_scale" class="range-slider" value="1" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">AR Zoom</label>
+            <input type="number" step="0.1" id="ar_zoom" class="form-input" value="1" />
+            <input type="range" min="0.1" max="10" step="0.1" id="slider_ar_zoom" class="range-slider" value="1" />
+          </div>
+        </div>
+
+        <!-- AR POSITION -->
+        <div class="form-group">
+          <label class="form-label">AR Posição (X, Y, Z)</label>
+          <div class="vector-grid">
+            <div class="vector-input-box">
+              <span class="vector-label">X</span>
+              <input type="number" step="0.1" id="ar_pos_x" class="vector-number" value="0" />
+              <input type="range" min="-5" max="5" step="0.1" id="slider_ar_pos_x" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Y</span>
+              <input type="number" step="0.1" id="ar_pos_y" class="vector-number" value="0" />
+              <input type="range" min="-5" max="5" step="0.1" id="slider_ar_pos_y" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Z</span>
+              <input type="number" step="0.1" id="ar_pos_z" class="vector-number" value="0" />
+              <input type="range" min="-10" max="2" step="0.1" id="slider_ar_pos_z" class="range-slider" value="0" />
+            </div>
+          </div>
+        </div>
+
+        <!-- AR ROTATION -->
+        <div class="form-group">
+          <label class="form-label">AR Rotação (Graus °)</label>
+          <div class="vector-grid">
+            <div class="vector-input-box">
+              <span class="vector-label">X</span>
+              <input type="number" step="1" id="ar_rot_x" class="vector-number" value="0" />
+              <input type="range" min="-180" max="180" step="1" id="slider_ar_rot_x" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Y</span>
+              <input type="number" step="1" id="ar_rot_y" class="vector-number" value="0" />
+              <input type="range" min="-180" max="180" step="1" id="slider_ar_rot_y" class="range-slider" value="0" />
+            </div>
+            <div class="vector-input-box">
+              <span class="vector-label">Z</span>
+              <input type="number" step="1" id="ar_rot_z" class="vector-number" value="0" />
+              <input type="range" min="-180" max="180" step="1" id="slider_ar_rot_z" class="range-slider" value="0" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CARD 4: GENERATED JSON -->
+      <div class="panel-card">
+        <div class="panel-header">
+          <span class="panel-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            4. JSON Gerado (Props)
+          </span>
+          <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 11px;" id="btnCopyJsonDirect">Copiar</button>
+        </div>
+        <div class="json-box" id="jsonOutput"></div>
+      </div>
+
+    </div>
+
+    <!-- VIEWPORT SIMULATOR COLUMN (RIGHT) -->
+    <div class="viewports-area" id="viewportsArea">
+
+      <div class="viewports-header">
+        <div class="viewports-title">
+          <span>Simulador Fiel dos Viewers do App</span>
+          <div style="display: flex; gap: 8px; align-items: center; margin-left: 12px;">
+            <label style="font-size: 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-sec);">
+              <input type="checkbox" id="checkGridHelper" checked /> Grade de Alinhamento
+            </label>
+            <label style="font-size: 12px; display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--text-sec); margin-left: 10px;">
+              <input type="checkbox" id="checkAxesHelper" checked /> Eixos X/Y/Z
+            </label>
+          </div>
+        </div>
+
+        <div class="viewport-tabs">
+          <button class="tab-btn active" data-view="both">Lado a Lado</button>
+          <button class="tab-btn" data-view="3d">Só 3D</button>
+          <button class="tab-btn" data-view="ar">Só AR</button>
+        </div>
+      </div>
+
+      <!-- VIEWPORTS GRID -->
+      <div class="viewports-grid" id="viewportsGrid">
+
+        <!-- SIMULATOR 1: 3D APP VIEWER -->
+        <div class="mockup-container" id="container3D">
+          <div class="mockup-top-bar">
+            <span class="mockup-tag">Visualizador 3D (No Card do Coletável)</span>
+            <span class="mockup-dimension">Altura: 220px</span>
+          </div>
+
+          <!-- APP CARD CONTAINER -->
+          <div class="app-card-preview" id="dropZone3D">
+            <div class="drop-zone-overlay" id="dropOverlay">Solte o arquivo .GLB aqui!</div>
+
+            <!-- CANVAS 3D CONTAINER -->
+            <div class="app-3d-viewport" id="canvasContainer3D"></div>
+
+            <!-- SIMULATED APP CARD FOOTER -->
+            <div class="app-card-mock-info">
+              <span class="mock-badge">TECNOLOGIA DA INFORMAÇÃO</span>
+              <h3 class="mock-title" id="mockItemTitle">Placa-Mãe AMD</h3>
+              <p class="mock-desc">Simulação em tempo real da renderização 3D oficial do CampusQuest.</p>
+            </div>
+          </div>
+
+          <!-- FULLSCREEN SIMULATION PREVIEW -->
+          <div style="margin-top: 8px;">
+            <div class="mockup-top-bar" style="margin-bottom: 8px;">
+              <span class="mockup-tag" style="background: rgba(86, 255, 176, 0.15); color: var(--green);">Modo Tela Cheia (Fullscreen)</span>
+              <span class="mockup-dimension">360° Interativo</span>
+            </div>
+            <div class="app-3d-fullscreen-viewport" id="canvasContainer3DFull"></div>
+          </div>
+        </div>
+
+        <!-- SIMULATOR 2: AR VIEWER -->
+        <div class="mockup-container" id="containerAR">
+          <div class="mockup-top-bar">
+            <span class="mockup-tag" style="background: rgba(234, 179, 8, 0.2); color: var(--accent);">Realidade Aumentada (AR)</span>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <button class="btn btn-secondary" style="padding: 2px 8px; font-size: 10px;" id="btnToggleWebcam">Ligar Câmera</button>
+              <span class="mockup-dimension">FOV 60° AR</span>
+            </div>
+          </div>
+
+          <!-- AR PHONE FRAME -->
+          <div class="ar-screen-frame" id="canvasContainerAR">
+            <!-- SIMULATED REALITY / CAMERA FEED -->
+            <video id="webcamVideo" class="ar-camera-bg" autoplay playsinline muted style="display: none;"></video>
+            <div id="cameraPlaceholder" class="ar-camera-bg" style="background: radial-gradient(circle at center, #1E293B 0%, #070A13 100%);"></div>
+
+            <div class="ar-hud-overlay">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="hud-chip">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #EF4444; display: inline-block;"></span>
+                  AR Ativo
+                </div>
+                <div class="hud-chip" id="arScaleChip">Escala: 1.0x</div>
+              </div>
+
+              <div class="ar-crosshair"></div>
+
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="hud-chip">Toque e arraste para alinhar</div>
+                <div class="hud-chip" id="arPosChip">P: [0, 0, 0]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- IMPORT JSON MODAL -->
+  <div class="modal-backdrop" id="modalImport">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Importar JSON de Coletável</h2>
+        <button class="btn btn-secondary btn-icon" id="btnCloseImportModal">✕</button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-sec);">
+        Cole abaixo o JSON do campo <code>props</code> ou <code>objectData</code> de um coletável existente para carregar suas configurações.
+      </p>
+      <textarea id="importJsonTextarea" class="form-input" style="height: 160px; font-family: 'JetBrains Mono', monospace; font-size: 12px;" placeholder='{ "transform": { ... }, "viewer": { ... }, "ar": { ... } }'></textarea>
+      <div style="display: flex; justify-content: flex-end; gap: 8px;">
+        <button class="btn btn-secondary" id="btnCancelImport">Cancelar</button>
+        <button class="btn btn-primary" id="btnApplyImport">Aplicar Configurações</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast" id="toast">JSON copiado para a área de transferência!</div>
+
+  <!-- MAIN SCRIPT -->
+  <script>
+    /* =========================================================
+       CAMPUSQUEST 3D & AR MODEL STUDIO LOGIC
+       ========================================================= */
+
+    const DEFAULT_PROPS = {
+      transform: {
+        scale: { x: 0.1, y: 0.1, z: 0.1 },
+        rotation: { x: 0, y: 45, z: 0 },
+        position: { x: 0, y: 0, z: 0 }
+      },
+      viewer: {
+        autoRotate: true,
+        zoom: { min: 0.5, max: 5.0 }
+      },
+      ar: {
+        scale: 1,
+        zoom: 1,
+        position: { x: 0, y: 0, z: 0 },
+        rotation: { x: 0, y: 0, z: 0 }
+      }
+    };
+
+    let currentProps = JSON.parse(JSON.stringify(DEFAULT_PROPS));
+    let loadedGltfScene = null;
+    let localFileArrayBuffer = null;
+
+    // SCENES, CAMERAS, RENDERERS
+    let scene3DCard, camera3DCard, renderer3DCard, modelGroup3DCard, grid3DCard, axes3DCard;
+    let scene3DFull, camera3DFull, renderer3DFull, modelGroup3DFull, grid3DFull, axes3DFull, controls3DFull;
+    let sceneAR, cameraAR, rendererAR, modelGroupAR, gridAR, axesAR, controlsAR;
+
+    // DOM ELEMENTS
+    const inputBaseUrl = document.getElementById('inputBaseUrl');
+    const inputModelPath = document.getElementById('inputModelPath');
+    const btnLoadRemote = document.getElementById('btnLoadRemote');
+    const btnPickLocalFile = document.getElementById('btnPickLocalFile');
+    const filePicker = document.getElementById('filePicker');
+    const modelStatus = document.getElementById('modelStatus');
+    const jsonOutput = document.getElementById('jsonOutput');
+    const toast = document.getElementById('toast');
+
+    function showToast(msg) {
+      toast.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    /* =========================================================
+       INITIALIZE THREE.JS VIEWPORTS
+       ========================================================= */
+
+    function createStudioLights(scene, camera) {
+      const cameraLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      cameraLight.position.set(0, 0, 1);
+      camera.add(cameraLight);
+      scene.add(camera);
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambientLight);
+
+      const hemiLight = new THREE.HemisphereLight(0xffffff, 0x555555, 0.6);
+      hemiLight.position.set(0, 20, 0);
+      scene.add(hemiLight);
+
+      const topLight = new THREE.DirectionalLight(0xffffff, 0.5);
+      topLight.position.set(0, 10, 0);
+      scene.add(topLight);
+
+      const backLight = new THREE.DirectionalLight(0xffffff, 0.4);
+      backLight.position.set(0, 5, -10);
+      scene.add(backLight);
+
+      const leftLight = new THREE.DirectionalLight(0xffffff, 0.4);
+      leftLight.position.set(-10, 2, 0);
+      scene.add(leftLight);
+
+      const rightLight = new THREE.DirectionalLight(0xffffff, 0.4);
+      rightLight.position.set(10, 2, 0);
+      scene.add(rightLight);
+
+      const bottomLight = new THREE.DirectionalLight(0xffffff, 0.3);
+      bottomLight.position.set(0, -10, 0);
+      scene.add(bottomLight);
+    }
+
+    function init3DCardViewport() {
+      const container = document.getElementById('canvasContainer3D');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene3DCard = new THREE.Scene();
+      camera3DCard = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera3DCard.position.z = 5;
+
+      renderer3DCard = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer3DCard.setSize(width, height);
+      renderer3DCard.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer3DCard.outputEncoding = THREE.sRGBEncoding;
+      renderer3DCard.toneMapping = THREE.ACESFilmicToneMapping;
+      container.appendChild(renderer3DCard.domElement);
+
+      createStudioLights(scene3DCard, camera3DCard);
+
+      grid3DCard = new THREE.GridHelper(30, 30, 0xEAB308, 0x334155);
+      grid3DCard.position.y = -0.5;
+      grid3DCard.material.opacity = 0.4;
+      grid3DCard.material.transparent = true;
+      scene3DCard.add(grid3DCard);
+
+      axes3DCard = new THREE.AxesHelper(2);
+      scene3DCard.add(axes3DCard);
+
+      modelGroup3DCard = new THREE.Group();
+      scene3DCard.add(modelGroup3DCard);
+
+      // Card touch gesture interaction emulation
+      let isDragging = false;
+      let prevX = 0, prevY = 0;
+
+      renderer3DCard.domElement.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        prevX = e.clientX;
+        prevY = e.clientY;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isDragging) return;
+        const dx = e.clientX - prevX;
+        const dy = e.clientY - prevY;
+        prevX = e.clientX;
+        prevY = e.clientY;
+
+        currentProps.transform.rotation.y = (currentProps.transform.rotation.y + dx * 0.5) % 360;
+        currentProps.transform.rotation.x = Math.max(-85, Math.min(85, currentProps.transform.rotation.x + dy * 0.5));
+        syncInputsFromProps();
+      });
+
+      window.addEventListener('pointerup', () => { isDragging = false; });
+    }
+
+    function init3DFullscreenViewport() {
+      const container = document.getElementById('canvasContainer3DFull');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      scene3DFull = new THREE.Scene();
+      camera3DFull = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+      camera3DFull.position.set(0, 0, 5);
+
+      renderer3DFull = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer3DFull.setSize(width, height);
+      renderer3DFull.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer3DFull.outputEncoding = THREE.sRGBEncoding;
+      renderer3DFull.toneMapping = THREE.ACESFilmicToneMapping;
+      container.appendChild(renderer3DFull.domElement);
+
+      createStudioLights(scene3DFull, camera3DFull);
+
+      grid3DFull = new THREE.GridHelper(30, 30, 0xEAB308, 0x334155);
+      grid3DFull.position.y = -0.5;
+      grid3DFull.material.opacity = 0.4;
+      grid3DFull.material.transparent = true;
+      scene3DFull.add(grid3DFull);
+
+      axes3DFull = new THREE.AxesHelper(2);
+      scene3DFull.add(axes3DFull);
+
+      modelGroup3DFull = new THREE.Group();
+      scene3DFull.add(modelGroup3DFull);
+
+      controls3DFull = new THREE.OrbitControls(camera3DFull, renderer3DFull.domElement);
+      controls3DFull.enableDamping = true;
+      controls3DFull.dampingFactor = 0.05;
+    }
+
+    function initARViewport() {
+      const container = document.getElementById('canvasContainerAR');
+      const width = container.clientWidth;
+      const height = container.clientHeight;
+
+      sceneAR = new THREE.Scene();
+      cameraAR = new THREE.PerspectiveCamera(60, width / height, 0.1, 1000);
+      cameraAR.position.set(0, 0, 4);
+
+      rendererAR = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      rendererAR.setSize(width, height);
+      rendererAR.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      rendererAR.outputEncoding = THREE.sRGBEncoding;
+      rendererAR.toneMapping = THREE.ACESFilmicToneMapping;
+      rendererAR.domElement.className = 'ar-canvas-layer';
+      container.appendChild(rendererAR.domElement);
+
+      createStudioLights(sceneAR, cameraAR);
+
+      gridAR = new THREE.GridHelper(20, 20, 0x56FFB0, 0x1E293B);
+      gridAR.position.y = -1;
+      gridAR.material.opacity = 0.4;
+      gridAR.material.transparent = true;
+      sceneAR.add(gridAR);
+
+      axesAR = new THREE.AxesHelper(1.5);
+      sceneAR.add(axesAR);
+
+      modelGroupAR = new THREE.Group();
+      sceneAR.add(modelGroupAR);
+
+      // AR Drag & Pan Controls
+      controlsAR = new THREE.OrbitControls(cameraAR, rendererAR.domElement);
+      controlsAR.enableDamping = true;
+      controlsAR.dampingFactor = 0.05;
+    }
+
+    /* =========================================================
+       MODEL LOADING (REMOTE / LOCAL FILE BUFFER)
+       ========================================================= */
+
+    const gltfLoader = new THREE.GLTFLoader();
+
+    function updateModelsInScenes(gltfScene) {
+      // Clear previous models
+      while (modelGroup3DCard.children.length > 0) modelGroup3DCard.remove(modelGroup3DCard.children[0]);
+      while (modelGroup3DFull.children.length > 0) modelGroup3DFull.remove(modelGroup3DFull.children[0]);
+      while (modelGroupAR.children.length > 0) modelGroupAR.remove(modelGroupAR.children[0]);
+
+      if (!gltfScene) return;
+
+      const cloneCard = gltfScene.clone();
+      const cloneFull = gltfScene.clone();
+      const cloneAR = gltfScene.clone();
+
+      modelGroup3DCard.add(cloneCard);
+      modelGroup3DFull.add(cloneFull);
+      modelGroupAR.add(cloneAR);
+
+      applyPropsToScenes();
+    }
+
+    function loadModelFromUrl(url) {
+      modelStatus.innerText = 'Carregando...';
+      modelStatus.style.background = 'rgba(234, 179, 8, 0.2)';
+      modelStatus.style.color = 'var(--accent)';
+
+      gltfLoader.load(
+        url,
+        (gltf) => {
+          loadedGltfScene = gltf.scene;
+          updateModelsInScenes(loadedGltfScene);
+          modelStatus.innerText = 'Carregado';
+          modelStatus.style.background = 'rgba(22, 163, 74, 0.2)';
+          modelStatus.style.color = '#16A34A';
+          showToast('Modelo 3D carregado com sucesso!');
+        },
+        (xhr) => {
+          if (xhr.lengthComputable) {
+            const pct = Math.round((xhr.loaded / xhr.total) * 100);
+            modelStatus.innerText = pct + '%';
+          }
+        },
+        (err) => {
+          console.error(err);
+          modelStatus.innerText = 'Erro ao carregar';
+          modelStatus.style.background = 'rgba(239, 68, 68, 0.2)';
+          modelStatus.style.color = '#EF4444';
+          showToast('Não foi possível carregar o modelo da URL informada.');
+        }
+      );
+    }
+
+    function loadModelFromArrayBuffer(buffer, filename) {
+      modelStatus.innerText = 'Processando...';
+      gltfLoader.parse(
+        buffer,
+        '',
+        (gltf) => {
+          loadedGltfScene = gltf.scene;
+          updateModelsInScenes(loadedGltfScene);
+          modelStatus.innerText = 'Local: ' + filename;
+          modelStatus.style.background = 'rgba(22, 163, 74, 0.2)';
+          modelStatus.style.color = '#16A34A';
+          document.getElementById('mockItemTitle').innerText = filename.replace(/\.[^/.]+$/, '');
+          showToast('Arquivo local "' + filename + '" carregado!');
+        },
+        (err) => {
+          console.error(err);
+          modelStatus.innerText = 'Erro no arquivo';
+          modelStatus.style.background = 'rgba(239, 68, 68, 0.2)';
+          modelStatus.style.color = '#EF4444';
+          showToast('Falha ao decodificar arquivo GLB/GLTF local.');
+        }
+      );
+    }
+
+    function resolveCurrentUrl() {
+      const base = inputBaseUrl.value.trim().replace(/\/+$/, '');
+      const path = inputModelPath.value.trim().replace(/^\/+/, '');
+      if (!path) return '';
+      if (path.startsWith('http://') || path.startsWith('https://')) return path;
+      return `${base}/${path}`;
+    }
+
+    btnLoadRemote.addEventListener('click', () => {
+      const url = resolveCurrentUrl();
+      if (url) loadModelFromUrl(url);
+    });
+
+    btnPickLocalFile.addEventListener('click', () => {
+      filePicker.click();
+    });
+
+    filePicker.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(evt) {
+        localFileArrayBuffer = evt.target.result;
+        loadModelFromArrayBuffer(localFileArrayBuffer, file.name);
+      };
+      reader.readAsArrayBuffer(file);
+    });
+
+    // Drag & Drop onto 3D Area
+    const dropZone = document.getElementById('viewportsArea');
+    const dropOverlay = document.getElementById('dropOverlay');
+
+    window.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropOverlay.classList.add('active');
+    });
+
+    window.addEventListener('dragleave', (e) => {
+      if (e.clientX <= 0 || e.clientY <= 0) {
+        dropOverlay.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropOverlay.classList.remove('active');
+      if (e.dataTransfer.files.length > 0) {
+        const file = e.dataTransfer.files[0];
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          localFileArrayBuffer = evt.target.result;
+          loadModelFromArrayBuffer(localFileArrayBuffer, file.name);
+        };
+        reader.readAsArrayBuffer(file);
+      }
+    });
+
+    /* =========================================================
+       SYNCHRONIZATION (INPUTS <-> PROPS <-> 3D SCENES)
+       ========================================================= */
+
+    function applyPropsToScenes() {
+      const t = currentProps.transform;
+      const ar = currentProps.ar;
+
+      // 3D Card Scene
+      modelGroup3DCard.position.set(t.position.x, t.position.y, t.position.z);
+      modelGroup3DCard.scale.set(t.scale.x, t.scale.y, t.scale.z);
+      modelGroup3DCard.rotation.set(
+        THREE.MathUtils.degToRad(t.rotation.x),
+        THREE.MathUtils.degToRad(t.rotation.y),
+        THREE.MathUtils.degToRad(t.rotation.z)
+      );
+
+      // 3D Fullscreen Scene
+      modelGroup3DFull.position.set(t.position.x, t.position.y, t.position.z);
+      modelGroup3DFull.scale.set(t.scale.x, t.scale.y, t.scale.z);
+      modelGroup3DFull.rotation.set(
+        THREE.MathUtils.degToRad(t.rotation.x),
+        THREE.MathUtils.degToRad(t.rotation.y),
+        THREE.MathUtils.degToRad(t.rotation.z)
+      );
+
+      // AR Scene
+      const arEffScale = (ar.scale || 1) * (ar.zoom || 1) * 0.3;
+      modelGroupAR.position.set(ar.position.x, ar.position.y, ar.position.z);
+      modelGroupAR.scale.set(arEffScale, arEffScale, arEffScale);
+      modelGroupAR.rotation.set(
+        THREE.MathUtils.degToRad(ar.rotation.x),
+        THREE.MathUtils.degToRad(ar.rotation.y),
+        THREE.MathUtils.degToRad(ar.rotation.z)
+      );
+
+      document.getElementById('arScaleChip').innerText = `Escala AR: ${(ar.scale || 1)}x`;
+      document.getElementById('arPosChip').innerText = `P: [${ar.position.x}, ${ar.position.y}, ${ar.position.z}]`;
+
+      updateJsonOutput();
+    }
+
+    function updateJsonOutput() {
+      jsonOutput.innerText = JSON.stringify(currentProps, null, 2);
+    }
+
+    function syncInputsFromProps() {
+      const t = currentProps.transform;
+      const v = currentProps.viewer;
+      const ar = currentProps.ar;
+
+      // 3D Scale
+      document.getElementById('v3d_scale_x').value = t.scale.x;
+      document.getElementById('v3d_scale_y').value = t.scale.y;
+      document.getElementById('v3d_scale_z').value = t.scale.z;
+      document.getElementById('slider_scale_x').value = t.scale.x;
+      document.getElementById('slider_scale_y').value = t.scale.y;
+      document.getElementById('slider_scale_z').value = t.scale.z;
+
+      // 3D Rot
+      document.getElementById('v3d_rot_x').value = t.rotation.x;
+      document.getElementById('v3d_rot_y').value = t.rotation.y;
+      document.getElementById('v3d_rot_z').value = t.rotation.z;
+      document.getElementById('slider_rot_x').value = t.rotation.x;
+      document.getElementById('slider_rot_y').value = t.rotation.y;
+      document.getElementById('slider_rot_z').value = t.rotation.z;
+
+      // 3D Pos
+      document.getElementById('v3d_pos_x').value = t.position.x;
+      document.getElementById('v3d_pos_y').value = t.position.y;
+      document.getElementById('v3d_pos_z').value = t.position.z;
+      document.getElementById('slider_pos_x').value = t.position.x;
+      document.getElementById('slider_pos_y').value = t.position.y;
+      document.getElementById('slider_pos_z').value = t.position.z;
+
+      // Viewer
+      document.getElementById('checkAutoRotate').checked = v.autoRotate;
+      document.getElementById('v3d_zoom_min').value = v.zoom.min;
+      document.getElementById('v3d_zoom_max').value = v.zoom.max;
+
+      // AR
+      document.getElementById('ar_scale').value = ar.scale;
+      document.getElementById('slider_ar_scale').value = ar.scale;
+      document.getElementById('ar_zoom').value = ar.zoom;
+      document.getElementById('slider_ar_zoom').value = ar.zoom;
+
+      document.getElementById('ar_pos_x').value = ar.position.x;
+      document.getElementById('ar_pos_y').value = ar.position.y;
+      document.getElementById('ar_pos_z').value = ar.position.z;
+      document.getElementById('slider_ar_pos_x').value = ar.position.x;
+      document.getElementById('slider_ar_pos_y').value = ar.position.y;
+      document.getElementById('slider_ar_pos_z').value = ar.position.z;
+
+      document.getElementById('ar_rot_x').value = ar.rotation.x;
+      document.getElementById('ar_rot_y').value = ar.rotation.y;
+      document.getElementById('ar_rot_z').value = ar.rotation.z;
+      document.getElementById('slider_ar_rot_x').value = ar.rotation.x;
+      document.getElementById('slider_ar_rot_y').value = ar.rotation.y;
+      document.getElementById('slider_ar_rot_z').value = ar.rotation.z;
+
+      applyPropsToScenes();
+    }
+
+    // Two-way bindings setup
+    function bindSliderAndNumber(numId, sliderId, onValChange) {
+      const numEl = document.getElementById(numId);
+      const sliderEl = document.getElementById(sliderId);
+
+      numEl.addEventListener('input', () => {
+        const val = parseFloat(numEl.value) || 0;
+        sliderEl.value = val;
+        onValChange(val);
+      });
+
+      sliderEl.addEventListener('input', () => {
+        const val = parseFloat(sliderEl.value) || 0;
+        numEl.value = val;
+        onValChange(val);
+      });
+    }
+
+    // Scale bindings
+    bindSliderAndNumber('v3d_scale_x', 'slider_scale_x', (v) => {
+      currentProps.transform.scale.x = v;
+      if (document.getElementById('checkUniformScale').checked) {
+        currentProps.transform.scale.y = v;
+        currentProps.transform.scale.z = v;
+        document.getElementById('v3d_scale_y').value = v;
+        document.getElementById('slider_scale_y').value = v;
+        document.getElementById('v3d_scale_z').value = v;
+        document.getElementById('slider_scale_z').value = v;
+      }
+      applyPropsToScenes();
+    });
+
+    bindSliderAndNumber('v3d_scale_y', 'slider_scale_y', (v) => {
+      currentProps.transform.scale.y = v;
+      if (document.getElementById('checkUniformScale').checked) {
+        currentProps.transform.scale.x = v;
+        currentProps.transform.scale.z = v;
+        document.getElementById('v3d_scale_x').value = v;
+        document.getElementById('slider_scale_x').value = v;
+        document.getElementById('v3d_scale_z').value = v;
+        document.getElementById('slider_scale_z').value = v;
+      }
+      applyPropsToScenes();
+    });
+
+    bindSliderAndNumber('v3d_scale_z', 'slider_scale_z', (v) => {
+      currentProps.transform.scale.z = v;
+      if (document.getElementById('checkUniformScale').checked) {
+        currentProps.transform.scale.x = v;
+        currentProps.transform.scale.y = v;
+        document.getElementById('v3d_scale_x').value = v;
+        document.getElementById('slider_scale_x').value = v;
+        document.getElementById('v3d_scale_y').value = v;
+        document.getElementById('slider_scale_y').value = v;
+      }
+      applyPropsToScenes();
+    });
+
+    // 3D Rotation bindings
+    bindSliderAndNumber('v3d_rot_x', 'slider_rot_x', (v) => { currentProps.transform.rotation.x = v; applyPropsToScenes(); });
+    bindSliderAndNumber('v3d_rot_y', 'slider_rot_y', (v) => { currentProps.transform.rotation.y = v; applyPropsToScenes(); });
+    bindSliderAndNumber('v3d_rot_z', 'slider_rot_z', (v) => { currentProps.transform.rotation.z = v; applyPropsToScenes(); });
+
+    // 3D Position bindings
+    bindSliderAndNumber('v3d_pos_x', 'slider_pos_x', (v) => { currentProps.transform.position.x = v; applyPropsToScenes(); });
+    bindSliderAndNumber('v3d_pos_y', 'slider_pos_y', (v) => { currentProps.transform.position.y = v; applyPropsToScenes(); });
+    bindSliderAndNumber('v3d_pos_z', 'slider_pos_z', (v) => { currentProps.transform.position.z = v; applyPropsToScenes(); });
+
+    // Viewer settings bindings
+    document.getElementById('checkAutoRotate').addEventListener('change', (e) => {
+      currentProps.viewer.autoRotate = e.target.checked;
+      applyPropsToScenes();
+    });
+
+    document.getElementById('v3d_zoom_min').addEventListener('input', (e) => {
+      currentProps.viewer.zoom.min = parseFloat(e.target.value) || 0.5;
+      updateJsonOutput();
+    });
+
+    document.getElementById('v3d_zoom_max').addEventListener('input', (e) => {
+      currentProps.viewer.zoom.max = parseFloat(e.target.value) || 5.0;
+      updateJsonOutput();
+    });
+
+    // AR Bindings
+    bindSliderAndNumber('ar_scale', 'slider_ar_scale', (v) => { currentProps.ar.scale = v; applyPropsToScenes(); });
+    bindSliderAndNumber('ar_zoom', 'slider_ar_zoom', (v) => { currentProps.ar.zoom = v; applyPropsToScenes(); });
+
+    bindSliderAndNumber('ar_pos_x', 'slider_ar_pos_x', (v) => { currentProps.ar.position.x = v; applyPropsToScenes(); });
+    bindSliderAndNumber('ar_pos_y', 'slider_ar_pos_y', (v) => { currentProps.ar.position.y = v; applyPropsToScenes(); });
+    bindSliderAndNumber('ar_pos_z', 'slider_ar_pos_z', (v) => { currentProps.ar.position.z = v; applyPropsToScenes(); });
+
+    bindSliderAndNumber('ar_rot_x', 'slider_ar_rot_x', (v) => { currentProps.ar.rotation.x = v; applyPropsToScenes(); });
+    bindSliderAndNumber('ar_rot_y', 'slider_ar_rot_y', (v) => { currentProps.ar.rotation.y = v; applyPropsToScenes(); });
+    bindSliderAndNumber('ar_rot_z', 'slider_ar_rot_z', (v) => { currentProps.ar.rotation.z = v; applyPropsToScenes(); });
+
+    // Helpers toggle
+    document.getElementById('checkGridHelper').addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      grid3DCard.visible = checked;
+      grid3DFull.visible = checked;
+      gridAR.visible = checked;
+    });
+
+    document.getElementById('checkAxesHelper').addEventListener('change', (e) => {
+      const checked = e.target.checked;
+      axes3DCard.visible = checked;
+      axes3DFull.visible = checked;
+      axesAR.visible = checked;
+    });
+
+    // Resets
+    document.getElementById('btnReset3D').addEventListener('click', () => {
+      currentProps.transform = JSON.parse(JSON.stringify(DEFAULT_PROPS.transform));
+      currentProps.viewer = JSON.parse(JSON.stringify(DEFAULT_PROPS.viewer));
+      syncInputsFromProps();
+      showToast('Transformações 3D resetadas.');
+    });
+
+    document.getElementById('btnResetAR').addEventListener('click', () => {
+      currentProps.ar = JSON.parse(JSON.stringify(DEFAULT_PROPS.ar));
+      syncInputsFromProps();
+      showToast('Configurações AR resetadas.');
+    });
+
+    /* =========================================================
+       THEMES & TABS
+       ========================================================= */
+
+    document.getElementById('themeSelector').addEventListener('change', (e) => {
+      document.body.setAttribute('data-theme', e.target.value);
+    });
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const mode = btn.getAttribute('data-view');
+        const c3D = document.getElementById('container3D');
+        const cAR = document.getElementById('containerAR');
+
+        if (mode === 'both') {
+          c3D.style.display = 'flex';
+          cAR.style.display = 'flex';
+        } else if (mode === '3d') {
+          c3D.style.display = 'flex';
+          cAR.style.display = 'none';
+        } else if (mode === 'ar') {
+          c3D.style.display = 'none';
+          cAR.style.display = 'flex';
+        }
+        onWindowResize();
+      });
+    });
+
+    /* =========================================================
+       IMPORT / EXPORT MODAL & CLIPBOARD
+       ========================================================= */
+
+    function copyPropsJson() {
+      const jsonStr = JSON.stringify(currentProps, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        showToast('JSON copiado com sucesso para a área de transferência!');
+      });
+    }
+
+    document.getElementById('btnCopyJson').addEventListener('click', copyPropsJson);
+    document.getElementById('btnCopyJsonDirect').addEventListener('click', copyPropsJson);
+
+    const modalImport = document.getElementById('modalImport');
+    document.getElementById('btnImportModal').addEventListener('click', () => {
+      document.getElementById('importJsonTextarea').value = JSON.stringify(currentProps, null, 2);
+      modalImport.classList.add('open');
+    });
+
+    document.getElementById('btnCloseImportModal').addEventListener('click', () => { modalImport.classList.remove('open'); });
+    document.getElementById('btnCancelImport').addEventListener('click', () => { modalImport.classList.remove('open'); });
+
+    document.getElementById('btnApplyImport').addEventListener('click', () => {
+      const raw = document.getElementById('importJsonTextarea').value.trim();
+      try {
+        const parsed = JSON.parse(raw);
+        if (parsed.transform) currentProps.transform = Object.assign(currentProps.transform, parsed.transform);
+        if (parsed.viewer) currentProps.viewer = Object.assign(currentProps.viewer, parsed.viewer);
+        if (parsed.ar || parsed.AR) currentProps.ar = Object.assign(currentProps.ar, parsed.ar || parsed.AR);
+        syncInputsFromProps();
+        modalImport.classList.remove('open');
+        showToast('JSON importado com sucesso!');
+      } catch (err) {
+        alert('Erro ao interpretar JSON. Verifique a sintaxe.');
+      }
+    });
+
+    /* =========================================================
+       WEBCAM CAMERA BACKGROUND (SIMULATED AR)
+       ========================================================= */
+
+    let isWebcamOn = false;
+    const videoEl = document.getElementById('webcamVideo');
+    const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+    const btnToggleWebcam = document.getElementById('btnToggleWebcam');
+
+    btnToggleWebcam.addEventListener('click', async () => {
+      if (!isWebcamOn) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+          videoEl.srcObject = stream;
+          videoEl.style.display = 'block';
+          cameraPlaceholder.style.display = 'none';
+          btnToggleWebcam.innerText = 'Desligar Câmera';
+          isWebcamOn = true;
+          showToast('Câmera AR ativada!');
+        } catch (e) {
+          alert('Não foi possível acessar a câmera do dispositivo.');
+        }
+      } else {
+        if (videoEl.srcObject) {
+          videoEl.srcObject.getTracks().forEach(t => t.stop());
+        }
+        videoEl.style.display = 'none';
+        cameraPlaceholder.style.display = 'block';
+        btnToggleWebcam.innerText = 'Ligar Câmera';
+        isWebcamOn = false;
+      }
+    });
+
+    /* =========================================================
+       ANIMATION LOOP & RESIZE HANDLING
+       ========================================================= */
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Auto rotation in card view
+      if (currentProps.viewer.autoRotate && modelGroup3DCard) {
+        modelGroup3DCard.rotation.y += 0.008;
+      }
+
+      if (controls3DFull) controls3DFull.update();
+      if (controlsAR) controlsAR.update();
+
+      if (renderer3DCard && scene3DCard && camera3DCard) renderer3DCard.render(scene3DCard, camera3DCard);
+      if (renderer3DFull && scene3DFull && camera3DFull) renderer3DFull.render(scene3DFull, camera3DFull);
+      if (rendererAR && sceneAR && cameraAR) rendererAR.render(sceneAR, cameraAR);
+    }
+
+    function onWindowResize() {
+      const c1 = document.getElementById('canvasContainer3D');
+      if (c1 && renderer3DCard && camera3DCard) {
+        camera3DCard.aspect = c1.clientWidth / c1.clientHeight;
+        camera3DCard.updateProjectionMatrix();
+        renderer3DCard.setSize(c1.clientWidth, c1.clientHeight);
+      }
+
+      const c2 = document.getElementById('canvasContainer3DFull');
+      if (c2 && renderer3DFull && camera3DFull) {
+        camera3DFull.aspect = c2.clientWidth / c2.clientHeight;
+        camera3DFull.updateProjectionMatrix();
+        renderer3DFull.setSize(c2.clientWidth, c2.clientHeight);
+      }
+
+      const c3 = document.getElementById('canvasContainerAR');
+      if (c3 && rendererAR && cameraAR) {
+        cameraAR.aspect = c3.clientWidth / c3.clientHeight;
+        cameraAR.updateProjectionMatrix();
+        rendererAR.setSize(c3.clientWidth, c3.clientHeight);
+      }
+    }
+
+    window.addEventListener('resize', onWindowResize);
+
+    // BOOTSTRAP
+    init3DCardViewport();
+    init3DFullscreenViewport();
+    initARViewport();
+    syncInputsFromProps();
+    animate();
+
+    // Auto-load default model
+    const initialUrl = resolveCurrentUrl();
+    if (initialUrl) loadModelFromUrl(initialUrl);
+
+  </script>
 </body>
 </html>
