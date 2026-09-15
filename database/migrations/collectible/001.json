@@ -162,7 +162,7 @@
 			"description": "A fonte de alimentação fornece energia elétrica para os componentes do computador, convertendo a energia da tomada para tensões adequadas ao sistema. Sua potência é medida em watts (W), e existem diferentes padrões e níveis de eficiência. A fonte deve ter potência suficiente e conectores compatíveis com os componentes instalados.",
 			"image": "images/collectibles/font-alimentacao.png",
 			"props": {
-				"model": "models/collectibles/m10__inspiredbycor.glb",
+				"model": "models/collectibles/power-supply.glb",
 				"AR": {
 					"scale": "0.05 0.05 0.05",
 					"position": "0 0 0",
@@ -191,6 +191,240 @@
 				"correct_option": "Watts (W)",
 				"fonte_link": "https://pt.wikipedia.org/wiki/Unidade_de_fonte_de_alimenta%C3%A7%C3%A3o_(computador)",
 				"collectible": "Fonte de alimentação"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Cooler",
+			"description": "O sistema de refrigeração controla a temperatura dos componentes, principalmente do processador. Existem sistemas passivos, que usam dissipadores sem ventoinhas, air-coolers, que utilizam dissipador e ventoinha, e water coolers, que usam líquido para transferir o calor. A escolha depende do componente e de sua necessidade de refrigeração.",
+			"image": "images/collectibles/air-cooler.png",
+			"props": {
+				"model": "models/collectibles/hyper_212_spectrum.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Mantenho o calor sob controle. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/oR6nJ",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual sistema utiliza líquido para transferir o calor do componente?",
+				"option_a": "Refrigeração passiva",
+				"option_b": "Air-cooler",
+				"option_c": "Water cooler",
+				"option_d": "Dissipador magnético",
+				"correct_option": "Water cooler",
+				"fonte_link": "",
+				"collectible": "Cooler"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Placa de vídeo",
+			"description": "A placa de vídeo possui uma GPU, responsável por processar imagens, vídeos e gráficos. Ela também possui memória própria, chamada VRAM. Existem placas dedicadas e gráficos integrados ao processador. Fabricantes como NVIDIA e AMD produzem GPUs com diferentes arquiteturas, quantidades de núcleos e capacidades de VRAM.",
+			"image": "images/collectibles/video-card.png",
+			"props": {
+				"model": "models/collectibles/geforce_gtx_1660_gigabyte.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Crio imagens e gráficos na tela. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/pypPv",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é a memória utilizada pela placa de vídeo para armazenar dados gráficos?",
+				"option_a": "RAM",
+				"option_b": "VRAM",
+				"option_c": "ROM",
+				"option_d": "Cache",
+				"correct_option": "VRAM",
+				"fonte_link": "",
+				"collectible": "Placa de vídeo"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Gabinete",
+			"description": "O gabinete é a estrutura que abriga e protege os componentes do computador. Ele possui espaços para instalar a placa-mãe, fonte, armazenamento e outros dispositivos. Existem diferentes tamanhos e formatos, como Mini Tower, Mid Tower e Full Tower, que oferecem diferentes espaços para componentes e sistemas de refrigeração.",
+			"image": "images/collectibles/computer-case.png",
+			"props": {
+				"model": "models/collectibles/computer_case.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Guardo e protejo todas as peças. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/6WPJ8",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é uma das principais funções do gabinete?",
+				"option_a": "Executar os programas",
+				"option_b": "Armazenar arquivos",
+				"option_c": "Abrigar e proteger os componentes",
+				"option_d": "Fornecer energia ao computador",
+				"correct_option": "Abrigar e proteger os componentes",
+				"fonte_link": "",
+				"collectible": "Gabinete"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Monitor",
+			"description": "O monitor é um dispositivo de saída que apresenta imagens, vídeos e informações geradas pelo computador. Existem diferentes tecnologias de tela, como LCD, LED e OLED, além de diferentes resoluções e taxas de atualização. A escolha depende do uso, sendo importante considerar fatores como tamanho, resolução e frequência em hertz (Hz).",
+			"image": "images/collectibles/curved-monitor.png",
+			"props": {
+				"model": "models/collectibles/curved_gaming_monitor_2.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Mostro tudo o que o computador faz. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/6V7rI",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "O que representa a taxa de atualização de um monitor?",
+				"option_a": "A quantidade de memória do computador",
+				"option_b": "A quantidade de vezes que a tela é atualizada por segundo",
+				"option_c": "A capacidade de armazenamento do monitor",
+				"option_d": "A potência consumida pelo computador",
+				"correct_option": "A quantidade de vezes que a tela é atualizada por segundo",
+				"fonte_link": "",
+				"collectible": "Monitor"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Teclado",
+			"description": "O teclado é um dispositivo de entrada usado para enviar comandos, textos e instruções ao computador. Existem diferentes tipos, como teclados de membrana, mecânicos e ópticos, que utilizam tecnologias distintas para detectar as teclas pressionadas. Também existem diferentes layouts, como ABNT2 e o padrão US.",
+			"image": "images/collectibles/pc-keboard.png",
+			"props": {
+				"model": "models/collectibles/logitech_mechanical_gaming_keyboard_rgb.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Com minhas teclas, você dá comandos. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/o6rtR",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é a função principal de um teclado?",
+				"option_a": "Exibir imagens",
+				"option_b": "Armazenar arquivos",
+				"option_c": "Enviar comandos e textos ao computador",
+				"option_d": "Fornecer energia aos componentes",
+				"correct_option": "Enviar comandos e textos ao computador",
+				"fonte_link": "",
+				"collectible": "Teclado"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Mouse",
+			"description": "O mouse é um dispositivo de entrada usado para controlar o ponteiro e interagir com elementos na tela. Ele pode utilizar sensores ópticos ou laser para detectar movimentos e possui botões para executar ações. Existem modelos com diferentes formatos, conexões e recursos, voltados para diferentes tipos de uso.",
+			"image": "images/collectibles/pc-mouse.png",
+			"props": {
+				"model": "models/collectibles/logitech_m310_mouse.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Movo o ponteiro pela tela. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/6TAID",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual tecnologia é comumente utilizada pelos mouses para detectar movimentos?",
+				"option_a": "Sensor óptico",
+				"option_b": "Memória RAM",
+				"option_c": "Disco magnético",
+				"option_d": "Processador gráfico",
+				"correct_option": "Sensor óptico",
+				"fonte_link": "",
+				"collectible": "Mouse"
 			}
 		}
 	}
