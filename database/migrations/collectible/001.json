@@ -8,15 +8,15 @@
 			"props": {
 				"model": "models/collectibles/placa-mae.glb",
 				"AR": {
-					"scale": "0.07 0.07 0.07",
+					"scale": "0.151 0.151 0.151",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.5"
 				},
 				"3D": {
-					"scale": "0.07 0.07 0.07",
+					"scale": "0.151 0.151 0.151",
 					"position": "0 0 0",
-					"rotation": "0 0 0",
+					"rotation": "20.96 0 165.93",
 					"zoom": "0.5"
 				}
 			},
@@ -92,7 +92,7 @@
 					"zoom": "0.1"
 				},
 				"AR": {
-					"scale": "1.7 1.7 1.7",
+					"scale": "0.4 0.4 0.4",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "1"
@@ -125,13 +125,13 @@
 			"props": {
 				"model": "models/collectibles/ssd_noname_m2.glb",
 				"AR": {
-					"scale": "0.23 0.23 0.23",
+					"scale": "1.2 1.2 1.2",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.23 0.23 0.23",
+					"scale": "0.338 0.338 0.338",
 					"position": "0 0 0",
 					"rotation": "50.86668395996094 83,3999938964844 0",
 					"zoom": "0.1"
@@ -164,13 +164,13 @@
 			"props": {
 				"model": "models/collectibles/power-supply.glb",
 				"AR": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "2 2 2",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "0.893 0.893 0.893",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -203,13 +203,13 @@
 			"props": {
 				"model": "models/collectibles/hyper_212_spectrum.glb",
 				"AR": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "1.3 1.3 1.3",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "1 1 1",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -242,13 +242,13 @@
 			"props": {
 				"model": "models/collectibles/geforce_gtx_1660_gigabyte.glb",
 				"AR": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "1.4 1.4 1.4",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "1 1 1",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -281,13 +281,13 @@
 			"props": {
 				"model": "models/collectibles/computer_case.glb",
 				"AR": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "1.4 1.4 1.4",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "0.478 0.478 0.478",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -365,7 +365,7 @@
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "0.011 0.011 0.011",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -398,13 +398,13 @@
 			"props": {
 				"model": "models/collectibles/logitech_m310_mouse.glb",
 				"AR": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "0.8 0.8 0.8",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
 				},
 				"3D": {
-					"scale": "0.05 0.05 0.05",
+					"scale": "0.126 0.126 0.126",
 					"position": "0 0 0",
 					"rotation": "0 0 0",
 					"zoom": "0.1"
@@ -425,6 +425,45 @@
 				"correct_option": "Sensor óptico",
 				"fonte_link": "",
 				"collectible": "Mouse"
+			}
+		}
+	},
+	{
+		"table": "collectible",
+		"content": {
+			"name": "Placa de rede",
+			"description": "A placa de rede permite que o computador se conecte a outras redes e à internet. Existem conexões cabeadas, como Ethernet, e sem fio, como Wi-Fi. Ela pode estar integrada à placa-mãe ou ser instalada separadamente, com diferentes velocidades de transmissão medidas em Mbps ou Gbps.",
+			"image": "images/collectibles/network-card.png",
+			"props": {
+				"model": "models/collectibles/network_interface_card.glb",
+				"AR": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				},
+				"3D": {
+					"scale": "0.05 0.05 0.05",
+					"position": "0 0 0",
+					"rotation": "0 0 0",
+					"zoom": "0.1"
+				}
+			},
+			"riddle": "Conecto o computador a outras redes. Quem sou eu?",
+			"gpsLocation": "",
+			"link": "",
+			"credits": "https://skfb.ly/oM7Qx",
+			"points": "10",
+			"journey": "Montando um PC",
+			"question": {
+				"question": "Qual é uma forma de conexão utilizada por placas de rede?",
+				"option_a": "Ethernet",
+				"option_b": "HDMI",
+				"option_c": "SATA",
+				"option_d": "DDR5",
+				"correct_option": "Ethernet",
+				"fonte_link": "",
+				"collectible": "Placa de rede"
 			}
 		}
 	}
